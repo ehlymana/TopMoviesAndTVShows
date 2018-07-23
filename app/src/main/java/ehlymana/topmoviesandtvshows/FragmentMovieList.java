@@ -34,7 +34,7 @@ public class FragmentMovieList extends Fragment implements SearchMovie.OnMovieSe
                 public boolean onQueryTextChange(String newText) {
                     movies.clear();
                     for (int i=0; i<backup.size(); i++) {
-                        if (backup.get(i).name.contains(newText)) movies.add(backup.get(i));
+                        if (backup.get(i).name.contains(newText) || newText.length()<3) movies.add(backup.get(i));
                         adapter.notifyDataSetChanged();
                     }
                     return true;
@@ -44,7 +44,7 @@ public class FragmentMovieList extends Fragment implements SearchMovie.OnMovieSe
                 public boolean onQueryTextSubmit(String query) {
                     movies.clear();
                     for (int i=0; i<backup.size(); i++) {
-                        if (backup.get(i).name.contains(query)) movies.add(backup.get(i));
+                        if (backup.get(i).name.contains(query) || query.length()<3) movies.add(backup.get(i));
                         adapter.notifyDataSetChanged();
                     }
                     return true;

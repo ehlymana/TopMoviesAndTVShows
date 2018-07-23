@@ -35,7 +35,7 @@ public class FragmentTVShowList extends Fragment implements SearchTVShow.OnTVSho
                 public boolean onQueryTextChange(String newText) {
                     TVShows.clear();
                     for (int i=0; i<backup.size(); i++) {
-                        if (backup.get(i).name.contains(newText)) TVShows.add(backup.get(i));
+                        if (backup.get(i).name.contains(newText) || newText.length()<3) TVShows.add(backup.get(i));
                         adapter.notifyDataSetChanged();
                     }
                     return true;
@@ -45,7 +45,7 @@ public class FragmentTVShowList extends Fragment implements SearchTVShow.OnTVSho
                 public boolean onQueryTextSubmit(String query) {
                     TVShows.clear();
                     for (int i=0; i<backup.size(); i++) {
-                        if (backup.get(i).name.contains(query)) TVShows.add(backup.get(i));
+                        if (backup.get(i).name.contains(query) || query.length()<3) TVShows.add(backup.get(i));
                         adapter.notifyDataSetChanged();
                     }
                     return true;
