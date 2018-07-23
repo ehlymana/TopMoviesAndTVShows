@@ -51,6 +51,7 @@ public class FragmentMovieList extends Fragment implements SearchMovie.OnMovieSe
                 }
             });
             //endregion
+            oic=(OnItemClick)getActivity();
             view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

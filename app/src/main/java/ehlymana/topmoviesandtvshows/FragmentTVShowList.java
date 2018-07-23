@@ -52,6 +52,7 @@ public class FragmentTVShowList extends Fragment implements SearchTVShow.OnTVSho
                 }
             });
             //endregion
+            oic=(OnItemClick)getActivity();
             view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
