@@ -27,6 +27,7 @@ public class FragmentTVShowList extends Fragment {
             ListView view = (ListView) getView().findViewById(R.id.listView);
             adapter = new AdapterTMDbObject(getActivity(), R.layout.list_element, TVShows);
             view.setAdapter(adapter);
+            //region Queries
             SearchView search = (SearchView) getActivity().findViewById(R.id.search);
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -40,15 +41,16 @@ public class FragmentTVShowList extends Fragment {
                     return true;
                 }
             });
+            //endregion
             view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    oic.onItemClickedF(position);
+                    oic.onItemClickedTVShow(position);
                 }
             });
         }
     }
     public interface OnItemClick {
-        public void onItemClickedF(int pos);
+        public void onItemClickedTVShow(int pos);
     }
 }

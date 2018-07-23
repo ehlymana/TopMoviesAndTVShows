@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class AdapterTMDbObject extends ArrayAdapter<TMDbObject> {
@@ -33,8 +35,7 @@ public class AdapterTMDbObject extends ArrayAdapter<TMDbObject> {
         TextView name=(TextView)newView.findViewById(R.id.nameList);
         ImageView image = (ImageView)newView.findViewById(R.id.imageList);
         name.setText(object.getName());
-        // slika je tip string
-        // image.setImageURI(object.getImage());
+        Picasso.get().load(object.getImage()).into(image);
         return newView;
     }
 }
