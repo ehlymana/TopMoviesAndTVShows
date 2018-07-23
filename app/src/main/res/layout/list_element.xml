@@ -8,19 +8,18 @@
         android:orientation="horizontal"
         android:weightSum="5">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:layout_margin="15dp"
             android:id="@+id/imageList"
             android:background="#FFFF"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="4"
             android:layout_margin="15dp"
-            android:id="@+id/nameList"
-            android:text="Tekst"/>
+            android:id="@+id/nameList"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

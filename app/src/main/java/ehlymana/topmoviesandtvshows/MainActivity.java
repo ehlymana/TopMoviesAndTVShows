@@ -1,14 +1,12 @@
 package ehlymana.topmoviesandtvshows;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.ToggleButton;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FragmentTVShowList.OnItemClick, FragmentMovieList.OnItemClick {
@@ -77,15 +75,13 @@ public class MainActivity extends AppCompatActivity implements FragmentTVShowLis
     @Override
     public void onItemClickedMovie (int pos) {
         Intent intent = new Intent(MainActivity.this, ActivityDetails.class);
-        intent.putExtra("type", "movie");
-        intent.putExtra("name", movieList.get(pos).name);
+        intent.putExtra("item", movieList.get(pos));
         MainActivity.this.startActivity(intent);
     }
     @Override
     public void onItemClickedTVShow (int pos) {
         Intent intent = new Intent(MainActivity.this, ActivityDetails.class);
-        intent.putExtra("type", "TVShow");
-        intent.putExtra("name", TVShowList.get(pos).name);
+        intent.putExtra("item", TVShowList.get(pos));
         MainActivity.this.startActivity(intent);
     }
 }

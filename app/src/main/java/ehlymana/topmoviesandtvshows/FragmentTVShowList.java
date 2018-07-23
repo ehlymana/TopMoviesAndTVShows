@@ -11,7 +11,7 @@ import android.widget.SearchView;
 
 import java.util.ArrayList;
 
-public class FragmentTVShowList extends Fragment {
+public class FragmentTVShowList extends Fragment implements SearchTVShow.OnTVShowSearchDone {
     private ArrayList<TMDbObject> TVShows=new ArrayList<TMDbObject>();
     AdapterTMDbObject adapter;
     OnItemClick oic;
@@ -32,12 +32,17 @@ public class FragmentTVShowList extends Fragment {
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    //search
+                    for (int i=0; i<TVShows.size(); i++) {
+                        if (!TVShows.get(i).name.contains(newText)) TVShows.remove(i);
+                    }
                     return true;
                 }
+
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    //search
+                    for (int i=0; i<TVShows.size(); i++) {
+                        if (!TVShows.get(i).name.contains(query)) TVShows.remove(i);
+                    }
                     return true;
                 }
             });
@@ -48,7 +53,14 @@ public class FragmentTVShowList extends Fragment {
                     oic.onItemClickedTVShow(position);
                 }
             });
+            new SearchTVShow((SearchTVShow.OnTVShowSearchDone) FragmentTVShowList.this).execute();
         }
+    }
+    @Override
+    public void OnDone (ArrayList<TMDbObject> res) {
+        TVShows.clear();
+        for (int i=0; i<res.size(); i++) TVShows.add(res.get(i));
+        adapter.notifyDataSetChanged();
     }
     public interface OnItemClick {
         public void onItemClickedTVShow(int pos);

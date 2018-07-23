@@ -2,21 +2,15 @@ package ehlymana.topmoviesandtvshows;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 
-public class FragmentMovieList extends Fragment {
+public class FragmentMovieList extends Fragment implements SearchMovie.OnMovieSearchDone {
     private ArrayList<TMDbObject> movies=new ArrayList<TMDbObject>();
     AdapterTMDbObject adapter;
     OnItemClick oic;
@@ -37,13 +31,17 @@ public class FragmentMovieList extends Fragment {
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    //search
+                    for (int i=0; i<movies.size(); i++) {
+                        if (!movies.get(i).name.contains(newText)) movies.remove(i);
+                    }
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    //search
+                    for (int i=0; i<movies.size(); i++) {
+                        if (!movies.get(i).name.contains(query)) movies.remove(i);
+                    }
                     return true;
                 }
             });
@@ -54,7 +52,14 @@ public class FragmentMovieList extends Fragment {
                     oic.onItemClickedMovie(position);
                 }
             });
+            new SearchMovie((SearchMovie.OnMovieSearchDone) FragmentMovieList.this).execute();
         }
+    }
+    @Override
+    public void OnDone (ArrayList<TMDbObject> res) {
+        movies.clear();
+        for (int i=0; i<res.size(); i++) movies.add(res.get(i));
+        adapter.notifyDataSetChanged();
     }
     public interface OnItemClick {
         public void onItemClickedMovie (int pos);

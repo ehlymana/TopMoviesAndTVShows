@@ -3,33 +3,34 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="50sp"
-            android:layout_margin="15sp"/>
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15sp"/>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="25sp"
-            android:layout_margin="15sp"/>
-
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="10">
+            <TextView
+                android:id="@+id/nameDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:layout_margin="15sp"
+                android:layout_weight="2"/>
+            <ImageView
+                android:id="@+id/imageDetails"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="15sp"
+                android:layout_weight="4"/>
+            <TextView
+                android:id="@+id/descriptionDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:layout_margin="15sp"
+                android:layout_weight="4"/>
+        </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
