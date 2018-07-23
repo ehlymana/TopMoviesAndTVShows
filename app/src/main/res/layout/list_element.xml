@@ -4,8 +4,9 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_margin="5dp"
         android:weightSum="5">
         <ImageView
             android:layout_width="75dp"
@@ -13,13 +14,14 @@
             android:layout_weight="1"
             android:layout_margin="15dp"
             android:id="@+id/imageList"
-            android:background="#FFFF"/>
+            android:text="Slika"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="4"
             android:layout_margin="15dp"
-            android:id="@+id/nameList"/>
+            android:id="@+id/nameList"
+            android:text="Tekst"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

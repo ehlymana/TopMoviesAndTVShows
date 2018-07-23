@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class FragmentTVShowList extends Fragment implements SearchTVShow.OnTVShowSearchDone {
     private ArrayList<TMDbObject> TVShows=new ArrayList<TMDbObject>();
+    private ArrayList<TMDbObject> backup=new ArrayList<TMDbObject>();
     AdapterTMDbObject adapter;
     OnItemClick oic;
     @Override
@@ -32,16 +33,20 @@ public class FragmentTVShowList extends Fragment implements SearchTVShow.OnTVSho
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    for (int i=0; i<TVShows.size(); i++) {
-                        if (!TVShows.get(i).name.contains(newText)) TVShows.remove(i);
+                    TVShows.clear();
+                    for (int i=0; i<backup.size(); i++) {
+                        if (backup.get(i).name.contains(newText)) TVShows.add(backup.get(i));
+                        adapter.notifyDataSetChanged();
                     }
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    for (int i=0; i<TVShows.size(); i++) {
-                        if (!TVShows.get(i).name.contains(query)) TVShows.remove(i);
+                    TVShows.clear();
+                    for (int i=0; i<backup.size(); i++) {
+                        if (backup.get(i).name.contains(query)) TVShows.add(backup.get(i));
+                        adapter.notifyDataSetChanged();
                     }
                     return true;
                 }
@@ -53,13 +58,17 @@ public class FragmentTVShowList extends Fragment implements SearchTVShow.OnTVSho
                     oic.onItemClickedTVShow(position);
                 }
             });
-            new SearchTVShow((SearchTVShow.OnTVShowSearchDone) FragmentTVShowList.this).execute();
+            if (backup.size()<10) new SearchTVShow((SearchTVShow.OnTVShowSearchDone) FragmentTVShowList.this).execute();
         }
     }
     @Override
     public void OnDone (ArrayList<TMDbObject> res) {
+        backup.clear();
         TVShows.clear();
-        for (int i=0; i<res.size(); i++) TVShows.add(res.get(i));
+        for (int i=0; i<res.size(); i++) {
+            backup.add(res.get(i));
+            TVShows.add(res.get(i));
+        }
         adapter.notifyDataSetChanged();
     }
     public interface OnItemClick {

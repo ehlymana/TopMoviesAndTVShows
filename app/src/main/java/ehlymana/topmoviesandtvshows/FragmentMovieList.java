@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class FragmentMovieList extends Fragment implements SearchMovie.OnMovieSearchDone {
     private ArrayList<TMDbObject> movies=new ArrayList<TMDbObject>();
+    private ArrayList<TMDbObject> backup=new ArrayList<TMDbObject>();
     AdapterTMDbObject adapter;
     OnItemClick oic;
     @Override
@@ -31,16 +32,20 @@ public class FragmentMovieList extends Fragment implements SearchMovie.OnMovieSe
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    for (int i=0; i<movies.size(); i++) {
-                        if (!movies.get(i).name.contains(newText)) movies.remove(i);
+                    movies.clear();
+                    for (int i=0; i<backup.size(); i++) {
+                        if (backup.get(i).name.contains(newText)) movies.add(backup.get(i));
+                        adapter.notifyDataSetChanged();
                     }
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    for (int i=0; i<movies.size(); i++) {
-                        if (!movies.get(i).name.contains(query)) movies.remove(i);
+                    movies.clear();
+                    for (int i=0; i<backup.size(); i++) {
+                        if (backup.get(i).name.contains(query)) movies.add(backup.get(i));
+                        adapter.notifyDataSetChanged();
                     }
                     return true;
                 }
@@ -52,13 +57,17 @@ public class FragmentMovieList extends Fragment implements SearchMovie.OnMovieSe
                     oic.onItemClickedMovie(position);
                 }
             });
-            new SearchMovie((SearchMovie.OnMovieSearchDone) FragmentMovieList.this).execute();
+            if (backup.size()<10) new SearchMovie((SearchMovie.OnMovieSearchDone) FragmentMovieList.this).execute();
         }
     }
     @Override
     public void OnDone (ArrayList<TMDbObject> res) {
+        backup.clear();
         movies.clear();
-        for (int i=0; i<res.size(); i++) movies.add(res.get(i));
+        for (int i=0; i<res.size(); i++) {
+            backup.add(res.get(i));
+            movies.add(res.get(i));
+        }
         adapter.notifyDataSetChanged();
     }
     public interface OnItemClick {
